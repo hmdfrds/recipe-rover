@@ -9,6 +9,7 @@ Content-Type: application/json
 }
 
 ### Login user
+# @name loginRequest
 POST http://localhost:5001/api/users/login HTTP/1.1
 Content-Type: application/json
 
@@ -18,5 +19,39 @@ Content-Type: application/json
 }
 
 ### User Profile
-GET http://localhost:5001/api/users/profile
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsImlhdCI6MTc0NzUxMzU4OSwiZXhwIjoxNzQ3NTk5OTg5fQ.tvXyav8No1jFYjpPTGO5k2fV43FqrWn8E3pmdDGteFE
+@authToken = {{loginRequest.response.body.$.token}}
+GET http://localhost:5001/api/users/profile HTTP/1.1
+Authorization: Bearer {{authToken}}
+
+### Add Item
+@authToken = {{loginRequest.response.body.$.token}}
+POST http://localhost:5001/api/pantry HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+    "ingredient_id": 2,
+    "quantity": "1",
+    "unit": "large"
+}
+
+### Get All Items
+@authToken = {{loginRequest.response.body.$.token}}
+GET http://localhost:5001/api/pantry HTTP/1.1
+Authorization: Bearer {{authToken}}
+
+### Update Item
+@authToken = {{loginRequest.response.body.$.token}}
+PUT http://localhost:5001/api/pantry/1 HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+    "quantity": "1",
+    "unit": "medium"
+}
+
+### Remove Item
+@authToken = {{loginRequest.response.body.$.token}}
+DELETE http://localhost:5001/api/pantry/1 HTTP/1.1
+Authorization: Bearer {{authToken}}

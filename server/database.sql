@@ -41,11 +41,15 @@ CREATE TABLE IF NOT EXISTS RecipeIngredients (
 );
 
 -- UserPantry Table
+DROP TABLE IF EXISTS UserPantry CASCADE;
 CREATE TABLE IF NOT EXISTS UserPantry (
     user_pantry_id SERIAL PRIMARY KEY,
     user_id INTEGER REFERENCES Users(user_id) ON DELETE CASCADE NOT NULL,
     ingredient_id INTEGER REFERENCES Ingredients(ingredient_id) ON DELETE CASCADE NOT NULL,
+    quantity VARCHAR(100),
+    unit VARCHAR(50),
     added_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     UNIQUE (user_id, ingredient_id)
 );
 
@@ -98,10 +102,21 @@ BEFORE UPDATE ON Recipes
 FOR EACH ROW
 EXECUTE FUNCTION trigger_set_timestamp();
 
+CREATE TRIGGER set_userpantry_updated_at
+BEFORE UPDATE ON UserPantry
+FOR EACH ROW
+EXECUTE FUNCTION trigger_set_timestamp();
+
 -- Initial data example:
--- INSERT INTO Ingredients (name, category) VALUES ('Chicken Breast', 'Meat');
--- INSERT INTO Ingredients (name, category) VALUES ('Onion', 'Vegetable');
--- INSERT INTO RecipeTags (name, type) VALUES ('Italian', 'cuisine');
--- INSERT INTO RecipeTags (name, type) VALUES ('Vegetarian', 'dietary');
+INSERT INTO Ingredients (name, category) VALUES ('Chicken Breast', 'Meat') ON CONFLICT (name) DO NOTHING;
+INSERT INTO Ingredients (name, category) VALUES ('Onion', 'Vegetable') ON CONFLICT (name) DO NOTHING;
+INSERT INTO Ingredients (name, category) VALUES ('Garlic', 'Vegetable') ON CONFLICT (name) DO NOTHING;
+INSERT INTO Ingredients (name, category) VALUES ('Olive Oil', 'Oil') ON CONFLICT (name) DO NOTHING;
+INSERT INTO Ingredients (name, category) VALUES ('Salt', 'Spice') ON CONFLICT (name) DO NOTHING;
+INSERT INTO Ingredients (name, category) VALUES ('Black Pepper', 'Spice') ON CONFLICT (name) DO NOTHING;
+INSERT INTO Ingredients (name, category) VALUES ('Tomato', 'Vegetable') ON CONFLICT (name) DO NOTHING;
+INSERT INTO Ingredients (name, category) VALUES ('Pasta', 'Grain') ON CONFLICT (name) DO NOTHING;
+INSERT INTO Ingredients (name, category) VALUES ('Cheese', 'Dairy') ON CONFLICT (name) DO NOTHING;
+INSERT INTO Ingredients (name, category) VALUES ('Rice', 'Grain') ON CONFLICT (name) DO NOTHING;
 
 \echo 'Database schema created successfully (if tables did not already exist).'
