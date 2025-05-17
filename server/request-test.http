@@ -1,9 +1,18 @@
-
-POST http://localhost:5001/api/users/register
+### Register user
+POST http://localhost:5001/api/users/register HTTP/1.1
 Content-Type: application/json
 
 {
-    "username": "testuser",
-    "email": "test@example.com",
+    "username": "testuser3",
+    "email": "test3@example.com",
+    "password": "password123"
+}
+
+### Login user
+POST http://localhost:5001/api/users/login HTTP/1.1
+Content-Type: application/json
+
+{
+    "email": "test3@example.com",
     "password": "password123"
 }
