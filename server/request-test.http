@@ -55,3 +55,35 @@ Authorization: Bearer {{authToken}}
 @authToken = {{loginRequest.response.body.$.token}}
 DELETE http://localhost:5001/api/pantry/1 HTTP/1.1
 Authorization: Bearer {{authToken}}
+
+### Create Recipe
+@authToken = {{loginRequest.response.body.$.token}}
+POST http://localhost:5001/api/recipes HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+  "title": "Simple Pasta Dish",
+  "description": "A quick and easy pasta dish.",
+  "instructions": "1. Boil pasta. 2. Prepare sauce. 3. Mix and serve.",
+  "prep_time_minutes": 10,
+  "cook_time_minutes": 15,
+  "difficulty": "Easy",
+  "servings": 2,
+  "image_url": "http://example.com/pasta.jpg",
+  "ingredients": [
+    { "name": "Pasta", "quantity": "200", "unit": "grams", "category": "Grain" },
+    { "name": "Tomato Sauce", "quantity": "1", "unit": "can", "category": "Sauce" },
+    { "ingredient_id": 3, "quantity": "2", "unit": "cloves" }
+  ],
+  "tags": [
+    { "name": "Italian", "type": "cuisine" },
+    { "name": "QuickMeal", "type": "meal_type" }
+  ]
+}
+
+### Get All Recipes
+GET http://localhost:5001/api/recipes HTTP/1.1
+
+### Get Single Recipe
+GET http://localhost:5001/api/recipes/14 HTTP/1.1

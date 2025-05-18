@@ -4,6 +4,7 @@ import cors from "cors";
 
 import userRoutes from "./routes/userRoutes.js";
 import pantryRoutes from "./routes/pantryRoutes.js";
+import recipeRoutes from "./routes/recipeRoutes.js";
 
 const app = express();
 
@@ -12,6 +13,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/api/users", userRoutes);
 app.use("/api/pantry", pantryRoutes);
+app.use("/api/recipes", recipeRoutes);
 
 app.get("/", (req, res) => {
   res.status(200).json({ message: "Welcome to Recipe Rover API!" });
