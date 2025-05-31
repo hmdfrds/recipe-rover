@@ -212,7 +212,7 @@ const getRecipeById = async (req, res) => {
 // @route   PUT /api/recipes/:id
 // @access  Private (author or admin)
 const updateRecipe = async (req, res) => {
-  const { id: recipeId } = req.params;
+  const { recipeId } = req.params;
   const {
     title,
     descriptions,
@@ -389,7 +389,7 @@ const updateRecipe = async (req, res) => {
 // @route   DELETE /api/recipes/:id
 // @access  Private (author or admin)
 const deleteRecipe = async (req, res) => {
-  const { id: recipeId } = req.params;
+  const { recipeId } = req.params;
   const user_id = req.user.user_id;
 
   const client = await pool.connect();
