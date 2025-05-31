@@ -78,7 +78,7 @@ Authorization: Bearer {{authToken}}
   ],
   "tags": [
     { "name": "Italian", "type": "cuisine" },
-    { "name": "QuickMeal", "type": "meal_type" }
+    { "name": "QuickMeal", "type": "teatime" }
   ]
 }
 
@@ -87,3 +87,22 @@ GET http://localhost:5001/api/recipes HTTP/1.1
 
 ### Get Single Recipe
 GET http://localhost:5001/api/recipes/14 HTTP/1.1
+
+### Update Recipe
+@authToken = {{loginRequest.response.body.$.token}}
+PUT http://localhost:5001/api/recipes/14 HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+  "title" : "Updated Super Pasta Dish V2",
+  "difficulty": "Medium",
+  "ingredients": [
+    {"name": "Whole Wheat Pasta", "quantity": "250", "unit": "grams", "category": "Grain"},
+    {"ingredient_id": 3, "quantity": "3", "unit": "cloves"} 
+  ],
+  "tags": [
+    {"name": "Healthy", "type": "dietary"},
+    {"tag_id": 1}
+  ]
+}
